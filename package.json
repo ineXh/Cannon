@@ -1,0 +1,12 @@
+{
+  "name": "cartrack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server8000": "python -m SimpleHTTPServer 8000"
+  },
+  "author": "",
+  "license": "ISC"
+}
