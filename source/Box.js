@@ -74,9 +74,9 @@ Box.prototype = {
   },
 } // end Box
 
-var spawnBox = function(x, y){
-  box = pool[constants.ObjectType.Box].shift()
-  if(box == undefined || !box) return;
-  box.init(x, y)
-  objects[constants.ObjectType.Box].push(box);
+var spawnObj = function(x, y, objType){
+  obj = pool[objType].shift()
+  if(obj == undefined || !obj) return;
+  obj.init(x, y)
+  objects[objType].push(obj);
 }

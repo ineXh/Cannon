@@ -8,6 +8,7 @@ UserInterface.prototype = {
 		this.displayTitle();
 	},
 	displayTitle: function(){
+		if(gameState != constants.GameState.Title) return;
 		fill('#ED225D');
 		textAlign(CENTER);
 		textFont(scoreFont);

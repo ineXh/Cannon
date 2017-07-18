@@ -43,15 +43,17 @@ Cannon.prototype = {
 			return
 		}
 		console.log('fire')
-				
+
 		force = PVector.fromAngle(this.angle);
-		force.mult(this.dist*height/40000*scaleFactor)
+		force.mult(this.dist*height/50000*scaleFactor)
 		tempb2Vec2.x = force.x;
 	    tempb2Vec2.y = force.y;
 		//new box2d.b2Vec2(10,-10)
 		this.ball.applyForce(tempb2Vec2);
 		this.ball.fired = true;
 		this.ball = null;
+		spawnDust(this.pos.x + this.length*Math.cos(this.angle),
+				  this.pos.y + this.length*Math.sin(this.angle))
 		this.load()
 
 	},

@@ -13,4 +13,4 @@ constants.ObjectType = function(){};
 constants.ObjectType.Invalid = -1;
 constants.ObjectType.Ball = 0;
 constants.ObjectType.Box = 1;
-constants.ObjectType.Dust = 10;
+constants.ObjectType.Particle = 10;

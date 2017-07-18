@@ -1,3 +1,6 @@
+var count = 0;
+var stage = 0;
+
 var bg = null;
 var gameState = constants.GameState.Title;
 var userInterface = null;
@@ -11,9 +14,9 @@ var tempb2Vec2 =  null;
 var pool = {}
 pool[constants.ObjectType.Ball] = [];
 pool[constants.ObjectType.Box] = [];
-pool[constants.ObjectType.Dust] = [];
+pool[constants.ObjectType.Particle] = [];
 
 var objects = {}
 objects[constants.ObjectType.Ball] = [];
 objects[constants.ObjectType.Box] = [];
-objects[constants.ObjectType.Dust] = [];
+objects[constants.ObjectType.Particle] = [];
