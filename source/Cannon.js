@@ -6,13 +6,14 @@ Cannon.prototype = {
 		this.pos = new PVector(0,0);
 		this.target = new PVector(0,0);
 		this.angle = -PI/4
-		this.width = width/30
-		this.length = width/20
+		this.angleLimit = PI*1/8;
+		this.width = height/30
+		this.length = height/20
 		// cannon base
-		this.baseRadius = width/50
-		this.baseWidth  = width/30
+		this.baseRadius = height/50
+		this.baseWidth  = height/30
 		// target
-		this.dotRadius = width/100;
+		this.dotRadius = height/100;
 	}, // end create
 	init: function(x, y){
 		this.pos.x = x;
@@ -26,8 +27,8 @@ Cannon.prototype = {
 		this.dist = PVector.dist(this.pos, this.target)
 		this.angle = Math.atan2(y - this.pos.y, x- this.pos.x)
 		//console.log(this.angle)
-		if(this.angle >= -PI/6 && this.angle <= PI/2) this.angle = -PI/6
-		if(this.angle <= -PI*5/6 || this.angle >= PI/2) this.angle = -PI*5/6
+		if(this.angle >= -this.angleLimit && this.angle <= PI/2) this.angle = -this.angleLimit
+		if(this.angle <= (-PI + this.angleLimit) || this.angle >= PI/2) this.angle = -PI + this.angleLimit
 	},
 	load: function(){
 		this.ball = pool[constants.ObjectType.Ball].shift()
@@ -38,12 +39,13 @@ Cannon.prototype = {
 		this.fired = false;
 	},
 	fire: function(){
+		if(gameState == constants.GameState.GetReady) return;
+		if(gameState == constants.GameState.GameOver) return;
 		if(!this.ball){
 			this.load();
 			return
 		}
-		console.log('fire')
-
+		//console.log('fire')
 		force = PVector.fromAngle(this.angle);
 		force.mult(this.dist*height/50000*scaleFactor)
 		tempb2Vec2.x = force.x;
@@ -73,12 +75,13 @@ Cannon.prototype = {
 				rotate(this.angle);
 				rectMode(CORNER);
 				fill(200)
-				rect(0, -this.width/2, this.length, this.width, this.baseRadius,this.baseRadius/4,this.baseRadius/4,this.baseRadius)
+
 				ellipse(0, 0, this.dotRadius, this.dotRadius)
 				ellipse(this.dist/4, 0, this.dotRadius, this.dotRadius)
 				ellipse(this.dist*2/4, 0, this.dotRadius, this.dotRadius)
 				ellipse(this.dist*3/4, 0, this.dotRadius, this.dotRadius)
 
+				rect(0, -this.width/2, this.length, this.width, this.baseRadius,this.baseRadius/4,this.baseRadius/4,this.baseRadius)
 			pop();
 			fill(255)
 			rect(0, 0, this.baseWidth, this.baseWidth, this.baseRadius, this.baseRadius, this.baseRadius/4, this.baseRadius/4);

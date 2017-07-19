@@ -1,16 +1,4 @@
-function updateObjects(){
-	for(type in objects){
-		for (var i = objects[type].length - 1; i >= 0; i--) {
-		    var object = objects[type][i];
-		    object.update();
-		    if(object.isDead()){
-		      object.clean()
-		      objects[type].splice(i,1);
-		      pool[type].push(object)
-		    }
-		  }
-	}
-} // end updateObjects
+
 
 function Ball(){
 	this.create();
@@ -21,7 +9,7 @@ Ball.prototype = {
 		this.pos = new PVector(0,0);
 		this.vel = new PVector(0, 0);
 		this.accel = new PVector(0, 0);
-
+		this.clr = color(255, 204, 0)
 		//this.maxSpeed = width/1;
 
 		this.r = height/120;
@@ -38,14 +26,18 @@ Ball.prototype = {
 
 	    // Some physics
 	    fixtureDef.density = 1.0;
-	    fixtureDef.friction = 0;//0.5;
+	    fixtureDef.friction = 100000;//0.5;//0.5;
 	    fixtureDef.restitution = 0.2;//0.2;
+	    
 
 	    // Create the body
 	    this.body = world.CreateBody(bd);
 	    // Attach the fixture
 	    this.body.CreateFixture(fixtureDef);
 	    this.body.SetActive(false)
+	    this.body.type = constants.ObjectType.Ball;
+	    this.body.parent = this;
+	    //this.body.SetUserData(this);
 	}, // end create
 	init: function(x, y){
 		/*this.pos.x = x;
@@ -70,11 +62,17 @@ Ball.prototype = {
 		if (this.history.length > 100) {
 			this.history.splice(0,1);
 		}*/
+		//console.log(this.body.GetTangentSpeed())
+		//console.log(this.body.GetLinearVelocity())
+		//console.log(this.body.GetAngularVelocity())
+		var angularVelocity = this.body.GetAngularVelocity();
+		this.body.SetAngularVelocity(angularVelocity*0.95)
 		this.display()
 	}, // end update
 	applyForce: function(force) {
 		this.body.SetActive(true)
 		this.body.ApplyLinearImpulse( force, this.body.GetWorldCenter())
+		//this.body.applyForce( force, this.body.GetWorldCenter())
 		//this.accel.add(force);
 	},
 	display: function() {
@@ -88,7 +86,7 @@ Ball.prototype = {
 		}
 		endShape();*/
 		// Draw a triangle rotated in the direction of velocity
-
+		//if(this.fired) console.log("display")
 		//imageMode(CENTER);
 		this.pos.x = this.body.GetPosition().x*scaleFactor
 	    this.pos.y = this.body.GetPosition().y*scaleFactor
@@ -98,7 +96,7 @@ Ball.prototype = {
 		push();
 			translate(this.pos.x,this.pos.y);
 			//rotate(theta-PI/2);
-			
+			fill(this.clr)
 			ellipse(0, 0, this.r*2, this.r*2)
 			//image(carImage, 0, 0, carImage.width/2, carImage.height/2);
 		pop();

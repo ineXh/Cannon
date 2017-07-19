@@ -1,6 +1,6 @@
 var count = 0;
 var stage = 0;
-
+var fr = 30;
 var bg = null;
 var gameState = constants.GameState.Title;
 var userInterface = null;

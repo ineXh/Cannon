@@ -1,16 +1,18 @@
+var particleInput = {};
 var spawnDust = function(x, y){
 	type = constants.ObjectType.Particle
   	obj = pool[type].shift()
 	if(obj == undefined || !obj) return;
-	var input = {x: x, y: y,
-	 ax: getRandomRange(-1, 1)*-width*0.001,
-	 ay: getRandomRange(0.5, 1)*-height*0.002,
-	 r: width/40,
-	 lifespanS: 100,
-	 lifespanD: 5,
-	 image: imgDust//
-	}
-	obj.init(input)
+	particleInput.x = x
+	particleInput.y = y
+	particleInput.ax = getRandomRange(-1, 1)*-width*0.001,
+	particleInput.ay = getRandomRange(0.5, 1)*-height*0.008,
+	particleInput.r = width/60,
+	particleInput.lifespanS = 100,
+	particleInput.lifespanD = 5,
+	particleInput.image = imgDust//
+	
+	obj.init(particleInput)
 	objects[type].push(obj);
 }
 function Particle(){

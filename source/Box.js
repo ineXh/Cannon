@@ -20,14 +20,19 @@ Box.prototype = {
 
     // Some physics
     fixtureDef.density = 1.0;
-    fixtureDef.friction = 0;//0.5;
-    fixtureDef.restitution = 0;//0.2;
-
+    fixtureDef.friction = 0.5;//0.5;
+    fixtureDef.restitution = 0.2;//0.2;
+    
     // Create the body
     this.body = world.CreateBody(bd);
     // Attach the fixture
     this.body.CreateFixture(fixtureDef);
     this.body.SetActive(false)
+    this.body.type = constants.ObjectType.Box;
+    this.body.parent = this;
+    //this.body.SetUserData(this);
+    //this.body.SetLinearVelocity(new box2d.b2Vec2(random(-5, 5), random(2, 5)));
+    //this.body.SetAngularVelocity(random(-5,5));
   },
   init: function(x,y){
     //this.body.SetTrans
