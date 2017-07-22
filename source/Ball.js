@@ -26,8 +26,8 @@ Ball.prototype = {
 
 	    // Some physics
 	    fixtureDef.density = 1.0;
-	    fixtureDef.friction = 100000;//0.5;//0.5;
-	    fixtureDef.restitution = 0.2;//0.2;
+	    fixtureDef.friction = 0.5;//0.5;
+	    fixtureDef.restitution = 0.3;//0.2;
 	    
 
 	    // Create the body
@@ -35,7 +35,7 @@ Ball.prototype = {
 	    // Attach the fixture
 	    this.body.CreateFixture(fixtureDef);
 	    this.body.SetActive(false)
-	    this.body.type = constants.ObjectType.Ball;
+	    this.type = constants.ObjectType.Ball;
 	    this.body.parent = this;
 	    //this.body.SetUserData(this);
 	}, // end create
@@ -50,6 +50,8 @@ Ball.prototype = {
 	    this.body.SetLinearVelocity(tempb2Vec2)
 	    this.body.SetActive(false)
 		this.fired = false
+		this.Dead = false;
+		this.bounceCount = 0;
 	},
 	update: function() {
 		/*if(this.fired) this.applyForce(gravity)
@@ -103,11 +105,19 @@ Ball.prototype = {
 
 	},
 	isDead: function(){
-		if(this.pos.x < 0 || this.pos.x > width) return true;
-		if(this.pos.y < 0 || this.pos.y > height) return true;
+		if(this.Dead) return true;
+		if(this.bounceCount > 2){
+			//debugger;
+			spawnDmg(this.pos.x, this.pos.y)
+			this.Dead = true;
+			return true;
+		}
+		if(this.pos.x < -this.r || this.pos.x > width + this.r) return true;
+		if(this.pos.y < -height || this.pos.y > height) return true;
 		return false;
 	},
 	clean: function(){
+		this.Dead = true;
     	this.body.SetActive(false);
     	//world.DestroyBody(this.body);
   	},

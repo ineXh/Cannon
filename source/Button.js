@@ -24,6 +24,7 @@ Button.prototype = {
 	},
 	display: function(){
 		if(!this.img) return;
+		noTint();
 		imageMode(CENTER);
 		image(this.img, this.pos.x, this.pos.y, this.r*2, this.r*2);
 	}

@@ -14,6 +14,9 @@ Cannon.prototype = {
 		this.baseWidth  = height/30
 		// target
 		this.dotRadius = height/100;
+
+		this.delay = 30;
+		this.lastFireCount = 0;
 	}, // end create
 	init: function(x, y){
 		this.pos.x = x;
@@ -41,6 +44,9 @@ Cannon.prototype = {
 	fire: function(){
 		if(gameState == constants.GameState.GetReady) return;
 		if(gameState == constants.GameState.GameOver) return;
+		if(gameState == constants.GameState.InPlay){
+			if(count - this.lastFireCount < this.delay) return;
+		}
 		if(!this.ball){
 			this.load();
 			return
@@ -54,10 +60,10 @@ Cannon.prototype = {
 		this.ball.applyForce(tempb2Vec2);
 		this.ball.fired = true;
 		this.ball = null;
+		this.lastFireCount = count;
 		spawnDust(this.pos.x + this.length*Math.cos(this.angle),
 				  this.pos.y + this.length*Math.sin(this.angle))
 		this.load()
-
 	},
 	update: function() {
 		this.seek(mouseX, mouseY)

@@ -23,7 +23,9 @@ function setup() {
   ground = height*0.7
   for(var i = 0; i < 50; i++) pool[constants.ObjectType.Ball].push(new Ball());
   for(var i = 0; i < 50; i++) pool[constants.ObjectType.Box].push(new Box());
-  for(var i = 0; i < 50; i++) pool[constants.ObjectType.Particle].push(new Particle());
+  for(var i = 0; i < 5; i++) pool[constants.ObjectType.GiantTriangle].push(new GiantTriangle());
+  for(var i = 0; i < 5; i++) pool[constants.ObjectType.Character].push(new Character());
+  for(var i = 0; i < 10; i++) pool[constants.ObjectType.Particle].push(new Particle());
 
   gamePlay.init();
 } // end setup
@@ -40,7 +42,7 @@ function draw() {
 
   gamePlay.update();
   userInterface.update();
-
+  
 } // end draw
 
 function mouseClicked() {
@@ -48,5 +50,8 @@ function mouseClicked() {
     userInterface.pressed();
   //spawnObj(mouseX, mouseY, constants.ObjectType.Box)
   //spawnObj(mouseX, mouseY, constants.ObjectType.Ball)
+  //spawnObj(mouseX, mouseY, constants.ObjectType.GiantTriangle)
+  //spawnObj(mouseX, mouseY, constants.ObjectType.Character)
+  //spawnDmg(mouseX, mouseY)
 
 }

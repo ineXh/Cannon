@@ -10,13 +10,20 @@ var cannon = null;
 var world;
 var tempb2Vec2 =  null;
 
+// dimensions
+var boxSide;
+
 //var balls = [];
 var pool = {}
 pool[constants.ObjectType.Ball] = [];
 pool[constants.ObjectType.Box] = [];
+pool[constants.ObjectType.GiantTriangle] = [];
+pool[constants.ObjectType.Character] = [];
 pool[constants.ObjectType.Particle] = [];
 
 var objects = {}
 objects[constants.ObjectType.Ball] = [];
 objects[constants.ObjectType.Box] = [];
+objects[constants.ObjectType.GiantTriangle] = [];
+objects[constants.ObjectType.Character] = [];
 objects[constants.ObjectType.Particle] = [];

@@ -5,6 +5,8 @@ UserInterface.prototype = {
 	create: function(){
 		this.playButton = new Button()
 		this.playButton.init(width/2, height*0.8, width/16, imgPlay);
+		this.continueButton = new Button()
+		this.continueButton.init(width/2, height*0.8, width/16, imgGo);
 	},
 	init: function(){
 		switch(gameState){
@@ -17,6 +19,7 @@ UserInterface.prototype = {
 		this.displayGetReady();
 		this.displayGo();
 		this.displayTime();
+		this.displayScore();
 	},
 	pressed: function(){
 		switch(gameState){
@@ -33,6 +36,15 @@ UserInterface.prototype = {
 				soundButton.play();
 				this.goCount = 0;
 				this.time = 10;
+				this.score = 0;
+			break;
+			case constants.GameState.GameOver:
+				if(this.continueButton.pressed()){
+  					soundButton.play();
+					stage++;
+					gameState = constants.GameState.GetReady;
+					gamePlay.init();
+				}
 			break;
 		}
 	}, // end pressed
@@ -64,14 +76,24 @@ UserInterface.prototype = {
 		textSize(height/8);
 		text('Go!', width/2, height*0.2);
 	},
+	displayScore: function(){
+		if(gameState != constants.GameState.GameOver) return;
+		fill('#ED225D');
+		textAlign(CENTER);
+		textFont(scoreFont);
+		textSize(height/8);
+		text('You Win!', width/2, height*0.2);
+		this.continueButton.display();
+	},
 	displayTime: function(){
-		if(gameState != constants.GameState.InPlay) return;
+		if(gameState != constants.GameState.InPlay && gameState != constants.GameState.GameOver) return;
 		fill('#2f5eaa');
 		noStroke()
 		textAlign(CENTER);
 		textFont(robotoFont);
 		textSize(height/12);
 		text('Time: ' + this.time, width*0.8, ground + height*0.1);
+		text('Score: ' + this.score, width*0.8, height*0.1);
 		if(count%fr == 0){
 			this.time -= 1;
 			if(this.time <= 0){

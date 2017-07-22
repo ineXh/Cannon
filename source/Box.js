@@ -3,8 +3,9 @@ function Box(){
 }
 Box.prototype = {
   create: function(){
-    this.w = width/60;
-    this.h = width/60;
+    boxSide = height/30;
+    this.w = boxSide;
+    this.h = boxSide;
 
     this.pos = new PVector(0, 0)
     // Define a body
@@ -28,7 +29,7 @@ Box.prototype = {
     // Attach the fixture
     this.body.CreateFixture(fixtureDef);
     this.body.SetActive(false)
-    this.body.type = constants.ObjectType.Box;
+    this.type = constants.ObjectType.Box;
     this.body.parent = this;
     //this.body.SetUserData(this);
     //this.body.SetLinearVelocity(new box2d.b2Vec2(random(-5, 5), random(2, 5)));
@@ -40,6 +41,8 @@ Box.prototype = {
     tempb2Vec2.y = y/scaleFactor
     this.body.SetPosition(tempb2Vec2);
     this.body.SetActive(true)
+    this.bounceCount = 0;
+    this.Dead = false;
     //if(this.body)
       //this.body.SetTransform(tempb2Vec2, this.body.GetAngle());
 
@@ -52,6 +55,12 @@ Box.prototype = {
 
   },
   isDead: function(){
+    if(this.Dead) return true;
+    if(this.bounceCount > 3){
+      spawnDmg(this.pos.x, this.pos.y)
+      this.Dead = true;
+      return true;
+    }
     if(this.pos.x < 0 || this.pos.x > width) return true;
     if(this.pos.y < 0 || this.pos.y > height) return true;
     return false;

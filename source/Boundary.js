@@ -25,7 +25,7 @@ Boundary.prototype = {
 
 		this.body = world.CreateBody(bd)
 		this.body.CreateFixture(fixtureDef);
-		this.body.type = constants.ObjectType.Boundary;
+		this.type = constants.ObjectType.Boundary;
 		this.body.parent = this;
 		//this.body.SetUserData(this);
 	},
