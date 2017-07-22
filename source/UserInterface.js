@@ -26,7 +26,7 @@ UserInterface.prototype = {
 			case constants.GameState.Title:
 				if(this.playButton.pressed()){
   					soundButton.play();
-					stage = 0;
+					stage = 1;
 					gameState = constants.GameState.GetReady;
 					gamePlay.init();
 				}
@@ -35,7 +35,6 @@ UserInterface.prototype = {
 				gameState = constants.GameState.InPlay;
 				soundButton.play();
 				this.goCount = 0;
-				this.time = 60;
 				this.score = 0;
 			break;
 			case constants.GameState.GameOver:

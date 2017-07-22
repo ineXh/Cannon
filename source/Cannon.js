@@ -6,7 +6,7 @@ Cannon.prototype = {
 		this.pos = new PVector(0,0);
 		this.target = new PVector(0,0);
 		this.angle = -PI/4
-		this.angleLimit = PI*1/8;
+		this.angleLimit = PI*1/16;
 		this.width = height/30
 		this.length = height/20
 		// cannon base
@@ -53,7 +53,8 @@ Cannon.prototype = {
 		}
 		//console.log('fire')
 		force = PVector.fromAngle(this.angle);
-		force.mult(this.dist*height/50000*scaleFactor)
+		factor = (width > height*1.5) ? 1/10000 : 1/50000;
+		force.mult(this.dist*height*factor*scaleFactor)
 		tempb2Vec2.x = force.x;
 	    tempb2Vec2.y = force.y;
 		//new box2d.b2Vec2(10,-10)

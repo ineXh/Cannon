@@ -40,6 +40,9 @@ Box.prototype = {
     tempb2Vec2.x = x/scaleFactor;
     tempb2Vec2.y = y/scaleFactor
     this.body.SetPosition(tempb2Vec2);
+    tempb2Vec2.x = tempb2Vec2.y = 0
+    this.body.SetLinearVelocity(tempb2Vec2)
+    this.body.SetAngleRadians(0)
     this.body.SetActive(true)
     this.bounceCount = 0;
     this.Dead = false;

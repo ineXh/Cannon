@@ -32,6 +32,7 @@ GamePlay.prototype = {
 } // end GamePlay
 
 var stageSetup = function(){
+	userInterface.time = 40;
 	switch(stage){
 		case 1:
 			spawnObj(getRandomInt(cannon.pos.x + width/10, width), height/2, constants.ObjectType.Character)
@@ -46,7 +47,7 @@ var stageSetup = function(){
 			spawnObj(getRandomInt(cannon.pos.x + width/10, width), height/2, constants.ObjectType.Character)
 			spawnObj(width/2, ground-height*Math.sqrt(3)/4/6, constants.ObjectType.GiantTriangle)
 		break;
-		case 4:
+		default:
 			//gravity.y = height*baseGravity*0.5
 			//world.SetGravity(gravity)
 		break;
