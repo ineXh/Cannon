@@ -9,8 +9,8 @@ var imgPlay;
 var imgGo;
 var soundButton;
 var loadAssets = function(){
-	scoreFont = loadFont('/assets/ataurusp.ttf');
-	robotoFont = loadFont('/assets/Roboto-Regular.ttf');
+	scoreFont = loadFont('assets/ataurusp.ttf');
+	robotoFont = loadFont('assets/Roboto-Regular.ttf');
 	moonBG = loadImage("assets/surface1.png");
 	imgPlay = loadImage("assets/play_196.png");
 	imgGo = loadImage("assets/go_196.png");

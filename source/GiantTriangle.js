@@ -5,12 +5,12 @@ GiantTriangle.prototype = Object.create(Box.prototype);
 GiantTriangle.prototype.constructor = Box;
 GiantTriangle.prototype.create = function(){
 
-    this.r = width/6;
+    this.r = height/6;
 
     this.pos = new PVector(0, 0)
     // Define a body
     var bd = new box2d.b2BodyDef();
-    bd.type = box2d.b2BodyType.b2_dynamicBody; //b2_staticBody
+    bd.type = box2d.b2BodyType.b2_staticBody; //b2_dynamicBody
     bd.position = scaleToWorld(0,0);
 
     // Define a fixture
@@ -67,4 +67,10 @@ GiantTriangle.prototype.display = function(){
     }
     endShape(CLOSE);
     pop();
+}
+GiantTriangle.prototype.isDead = function(){
+    if(this.Dead) return true;
+    if(this.pos.x < -this.r || this.pos.x > width + this.r) return true;
+    if(this.pos.y < -height || this.pos.y > height) return true;
+    return false;
 }

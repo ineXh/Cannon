@@ -16,7 +16,8 @@ function setup() {
   userInterface = new UserInterface();
   gamePlay = new GamePlay();
   //g = scaleToWorld(0,0.2)
-  world = createWorld(new box2d.b2Vec2(0,20));
+  gravity = new box2d.b2Vec2(0, height*baseGravity);
+  world = createWorld(gravity);
   world.SetContactListener(new ContactListener());
   tempb2Vec2 = new box2d.b2Vec2(0, 0)
 

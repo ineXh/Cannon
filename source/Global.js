@@ -12,6 +12,7 @@ var tempb2Vec2 =  null;
 
 // dimensions
 var boxSide;
+var baseGravity = 1/36;
 
 //var balls = [];
 var pool = {}

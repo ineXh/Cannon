@@ -41,6 +41,16 @@ var stageSetup = function(){
 			spawnObj(getRandomInt(cannon.pos.x + width/10, width), height/2, constants.ObjectType.Character)
 			insertStack(3, width/2, height/2);
 		break;
+		case 3:
+			spawnObj(getRandomInt(cannon.pos.x + width/10, width), height/2, constants.ObjectType.Character)
+			spawnObj(getRandomInt(cannon.pos.x + width/10, width), height/2, constants.ObjectType.Character)
+			spawnObj(width/2, ground-height*Math.sqrt(3)/4/6, constants.ObjectType.GiantTriangle)
+		break;
+		case 4:
+			//gravity.y = height*baseGravity*0.5
+			//world.SetGravity(gravity)
+		break;
+		
 	}
 }
 var stageUpdate = function(){
@@ -49,6 +59,9 @@ var stageUpdate = function(){
 			if(objects[constants.ObjectType.Character].length < 1) spawnObj(getRandomInt(cannon.pos.x + width/10, width), height/2, constants.ObjectType.Character)
 		break;
 		case 2:
+			if(objects[constants.ObjectType.Character].length < 2) spawnObj(getRandomInt(cannon.pos.x + width/10, width), height/2, constants.ObjectType.Character)
+		break;
+		case 3:
 			if(objects[constants.ObjectType.Character].length < 2) spawnObj(getRandomInt(cannon.pos.x + width/10, width), height/2, constants.ObjectType.Character)
 		break;
 		default:
