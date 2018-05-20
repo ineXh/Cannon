@@ -5,6 +5,8 @@ Cannon.prototype = {
 	create: function(){
 		this.pos = new PVector(0,0);
 		this.target = new PVector(0,0);
+		this.fireForce = new PVector(0,0);
+		this.fireVel = new PVector(0,0);
 		this.angle = -PI/4
 		this.angleLimit = PI*1/16;
 		this.width = height/30
@@ -14,6 +16,7 @@ Cannon.prototype = {
 		this.baseWidth  = height/30
 		// target
 		this.dotRadius = height/100;
+		this.trajectory = true;
 
 		this.delay = 30;
 		this.lastFireCount = 0;
@@ -40,6 +43,7 @@ Cannon.prototype = {
 		this.ball.init(this.pos.x, this.pos.y)
 		objects[constants.ObjectType.Ball].push(this.ball);
 		this.fired = false;
+		this.trajectory = true;
 	},
 	fire: function(){
 		if(gameState == constants.GameState.GetReady) return;
@@ -51,14 +55,21 @@ Cannon.prototype = {
 			this.load();
 			return
 		}
+		this.trajectory = false;
 		//console.log('fire')
-		force = PVector.fromAngle(this.angle);
-		factor = (width > height*1.5) ? 1/10000 : 1/50000;
-		force.mult(this.dist*height*factor*scaleFactor)
-		tempb2Vec2.x = force.x;
-	    tempb2Vec2.y = force.y;
+
+		tempb2Vec2.x = this.fireForce.x;
+	    tempb2Vec2.y = this.fireForce.y;
+	    //console.log(tempb2Vec2)
+	    timeFire = time;
+	    //console.log("f x: "  + tempb2Vec2.x)
+		//console.log("f y: "  + tempb2Vec2.y)
 		//new box2d.b2Vec2(10,-10)
 		this.ball.applyForce(tempb2Vec2);
+
+		//console.log("vel x: "  + this.ball.body.GetLinearVelocity().x)
+		//console.log("fireVel x: "  + this.fireVel.x)
+		//console.log("vel y: "  + this.ball.body.GetLinearVelocity().y)
 		this.ball.fired = true;
 		this.ball = null;
 		this.lastFireCount = count;
@@ -66,10 +77,19 @@ Cannon.prototype = {
 				  this.pos.y + this.length*Math.sin(this.angle))
 		this.load()
 	},
+	calculateFireForce: function(){
+		this.fireForce = PVector.fromAngle(this.angle);
+		factor = (width > height*1.5) ? 1/10000 : 1/50000;
+		this.fireForce.mult(this.dist*height*factor*scaleFactor)
+		this.fireVel.x = this.fireForce.x/this.ball.body.m_mass
+		this.fireVel.y = this.fireForce.y/this.ball.body.m_mass
+	},
 	update: function() {
 		this.seek(mouseX, mouseY)
 		this.display()
-		this.displayTarget();
+		//this.displayTarget();
+		this.calculateFireForce();
+		if(this.trajectory) this.displayTrajectory();
 
 	}, // end update
 
@@ -83,10 +103,10 @@ Cannon.prototype = {
 				rectMode(CORNER);
 				fill(200)
 
-				ellipse(0, 0, this.dotRadius, this.dotRadius)
+				/*ellipse(0, 0, this.dotRadius, this.dotRadius)
 				ellipse(this.dist/4, 0, this.dotRadius, this.dotRadius)
 				ellipse(this.dist*2/4, 0, this.dotRadius, this.dotRadius)
-				ellipse(this.dist*3/4, 0, this.dotRadius, this.dotRadius)
+				ellipse(this.dist*3/4, 0, this.dotRadius, this.dotRadius)*/
 
 				rect(0, -this.width/2, this.length, this.width, this.baseRadius,this.baseRadius/4,this.baseRadius/4,this.baseRadius)
 			pop();
@@ -102,5 +122,29 @@ Cannon.prototype = {
 		ellipse(mouseX, mouseY, width/60, width/60)
 		line(mouseX-width/80, mouseY, mouseX+width/80, mouseY)
 		line(mouseX, mouseY-width/80, mouseX, mouseY+width/80)
+	},
+	displayTrajectory: function(){
+		fill(220);
+		stroke(0)
+		strokeWeight(2)
+		var dt = 0.5;
+		var t = 0.5;
+		var n = 0
+		var x = this.pos.x;
+		var y = this.pos.y;
+		while(y < ground && n < 20){
+			x += dt*this.fireVel.x*scaleFactor
+			y = this.pos.y + 0.5*gravity.y*scaleFactor*t*t
+			+ t*this.fireVel.y*scaleFactor
+			if(y > ground) break;
+			//x = this.pos.x + t*this.fireVel.x*scaleFactor
+			ellipse(x, y, this.dotRadius, this.dotRadius)
+			t+= dt;
+			n++;
+		}
+
+		/*var time = -2*this.fireVel.y/gravity.y;
+		var x = this.pos.x + time*this.fireVel.x*scaleFactor
+		ellipse(x, this.pos.y, width/20, width/20)*/
 	}
 } // end Cannon

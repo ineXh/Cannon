@@ -1,0 +1,14 @@
+Vx = console.log("vel x: "  + this.ball.body.GetLinearVelocity().x)
+Vx = 17
+
+ball hits ground in 3.5 sec, pixel travelled is 595.
+
+scalefactor is 10
+
+distance = (17 m/s) * (3.5 s) * (10 pixel / m) = 595 pixel
+
+mass = objects[0][0].body.m_mass
+force y = -84.314
+vel y = -40.24
+m = 2.095
+-40.24 * 2.095 = -84.3

@@ -19,6 +19,8 @@ function ContactListener() {
     if(b1.parent.type == constants.ObjectType.Boundary && b2.parent.type == constants.ObjectType.Ball){
       b2.parent.bounceCount++;
       b2.parent.clr = color(255, 0, 0)
+      //console.log("x: " + (b2.parent.pos.x - cannon.pos.x))
+      //console.log("time: " + (time-timeFire))
       return;
     }
     if(b1.parent.type == constants.ObjectType.Ball &&

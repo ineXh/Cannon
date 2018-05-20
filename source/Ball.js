@@ -106,7 +106,7 @@ Ball.prototype = {
 	},
 	isDead: function(){
 		if(this.Dead) return true;
-		if(this.bounceCount > 2){
+		if(this.bounceCount > 0){
 			//debugger;
 			spawnDmg(this.pos.x, this.pos.y)
 			this.Dead = true;

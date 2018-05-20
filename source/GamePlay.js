@@ -51,7 +51,7 @@ var stageSetup = function(){
 			//gravity.y = height*baseGravity*0.5
 			//world.SetGravity(gravity)
 		break;
-		
+
 	}
 }
 var stageUpdate = function(){
@@ -73,7 +73,7 @@ var stageUpdate = function(){
 } // end stageUpdate
 
 var initTitle = function(){
-	
+
 	//spawnObj(width/2, ground - (6-i)*height/50, constants.ObjectType.Box)
 	thick = width/200;
 	boundaries.push(new Boundary(width/2, ground + thick, width, thick));

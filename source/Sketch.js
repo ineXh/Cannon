@@ -16,12 +16,12 @@ function setup() {
   userInterface = new UserInterface();
   gamePlay = new GamePlay();
   //g = scaleToWorld(0,0.2)
-  gravity = new box2d.b2Vec2(0, height*baseGravity);
+  gravity = new box2d.b2Vec2(0, 10);//height*baseGravity);
   world = createWorld(gravity);
   world.SetContactListener(new ContactListener());
   tempb2Vec2 = new box2d.b2Vec2(0, 0)
 
-  ground = height*0.7
+  ground = 500;//height*0.7
   for(var i = 0; i < 50; i++) pool[constants.ObjectType.Ball].push(new Ball());
   for(var i = 0; i < 50; i++) pool[constants.ObjectType.Box].push(new Box());
   for(var i = 0; i < 5; i++) pool[constants.ObjectType.GiantTriangle].push(new GiantTriangle());
@@ -31,7 +31,8 @@ function setup() {
   gamePlay.init();
 } // end setup
 
-
+var time;
+var timeFire;
 function draw() {
 
   count++;
@@ -39,7 +40,7 @@ function draw() {
   var timeStep = 1.0/fr;
   // 2nd and 3rd arguments are velocity and position iterations
   world.Step(timeStep, 10, 10);
-
+  time = Math.floor(count/fr*100)/100;
 
   gamePlay.update();
   userInterface.update();
