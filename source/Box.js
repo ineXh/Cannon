@@ -20,7 +20,7 @@ Box.prototype = {
     fixtureDef.shape.SetAsBox(scaleToWorld(this.w/2), scaleToWorld(this.h/2));
 
     // Some physics
-    fixtureDef.density = 1.0;
+    fixtureDef.density = 0.5;
     fixtureDef.friction = 0.5;//0.5;
     fixtureDef.restitution = 0.2;//0.2;
     
